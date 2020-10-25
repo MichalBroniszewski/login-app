@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * user: michal
+ * michal.broniszewski@picodi.com
+ * 25.10.2020
+ */
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -28,7 +35,6 @@ class AppFixtures extends Fixture
         for ($iterator = 1; $iterator <= self::NUMBER_OF_USERS; $iterator++) {
             $user = new User();
             $user->setUsername('user' . $iterator);
-            $user->setEmail('user' . $iterator . '@email.com');
             $user->setPassword(
                 $this->passwordEncoder->encodePassword(
                     $user,

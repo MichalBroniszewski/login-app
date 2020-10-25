@@ -16,7 +16,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,6 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+    private const USERS_PER_PAGE_PAGINATION_LIMIT = 10;
+
     /**
      * @Route("/list/{page}", name="user_list", defaults={"page"=1})
      * @param UserRepository $repository
@@ -42,7 +43,7 @@ class UserController extends AbstractController
         $users = $paginator->paginate(
             $repository->getUserListQuery(),
             $page,
-            10
+            self::USERS_PER_PAGE_PAGINATION_LIMIT
         );
 
         return $this->render(
@@ -65,7 +66,7 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         ?int $page
     ): RedirectResponse {
-        if ($this->getUser()->isEnabled()) {
+        if ($this->isAllowedToDisable()) {
             $user->setEnabled(false);
             $entityManager->flush();
             $this->addFlash('notice', 'User has been blocked.');
@@ -76,5 +77,12 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user_list', [
             'page' => $page
         ]);
+    }
+
+    private function isAllowedToDisable(): bool
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        return $user->isEnabled();
     }
 }

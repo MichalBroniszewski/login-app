@@ -50,14 +50,6 @@ class User implements UserInterface, Serializable
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="string", length=150, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5)
-     * @Assert\Email()
-     */
-    private $email;
-
-    /**
      * @var array
      * @ORM\Column(type="simple_array")
      */
@@ -87,16 +79,6 @@ class User implements UserInterface, Serializable
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
     }
 
     public function getPassword(): ?string

@@ -20,15 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends AbstractController
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
+    private UserPasswordEncoderInterface $passwordEncoder;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -39,9 +33,9 @@ class RegisterController extends AbstractController
     }
 
     /**
+     * @Route("/register", name="user_register")
      * @param Request $request
      * @return Response
-     * @Route("/register", name="user_register")
      */
     public function register(Request $request): Response
     {
@@ -60,7 +54,9 @@ class RegisterController extends AbstractController
             $this->entityManager->flush();
             $this->addFlash('notice', 'You\'ve successfully registered to the app!');
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('security_login', [
+                'username' => $user->getUsername()
+            ]);
         }
 
         return $this->render(

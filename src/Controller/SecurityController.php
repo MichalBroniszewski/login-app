@@ -14,23 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-/**
- * Class SecurityController
- * @package App\Controller
- */
 class SecurityController extends AbstractController
 {
     /**
+     * @Route("/login/{username}", name="security_login", defaults={"username"=null})
      * @param AuthenticationUtils $authenticationUtils
+     * @param string|null $username
      * @return Response
-     * @Route("/login", name="security_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, ?string $username): Response
     {
         return $this->render(
             'security/login.html.twig',
             [
-                'last_username' => $authenticationUtils->getLastUsername(),
+                'last_username' => $username ?: $authenticationUtils->getLastUsername(),
                 'error' => $authenticationUtils->getLastAuthenticationError()
             ]
         );
