@@ -1,0 +1,16 @@
+<div class="media text-muted pt-3">
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <span class="d-block">
+            <strong class="text-gray-dark">@{{ user.username }}</strong>
+        </span>
+    </p>
+</div>
+{% if app.user.enabled and user.enabled %}
+    <small class="d-block text-right mt-3">
+        <a href="{{ path('disable_user', { 'id': user.id, 'page': page }) }}">Disable</a>
+    </small>
+{% else %}
+    <small class="d-block text-right mt-3">
+        Disabled
+    </small>
+{% endif %}

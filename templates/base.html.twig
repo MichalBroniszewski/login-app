@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="bg-light">
+    {{ include('blocks/navigation.html.twig') }}
+    <main role="main" class="container">
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </main>
+    </body>
+</html>

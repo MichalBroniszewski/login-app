@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User list{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h3 class="border-bottom border-gray pb-2 mb-0">User list</h3>
+    {% for user in users %}
+        {{ include('user/list-item.html.twig', { 'user': user }) }}
+    {% endfor %}
+    <div class="navigation">
+        {{ knp_pagination_render(users) }}
+    </div>
+{% endblock %}
