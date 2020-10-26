@@ -1,0 +1,9 @@
+<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <h1 class="display-4 font-italic">{{ 'Hello '|trans }}{{ app.user.username }}</h1>
+        <p class="lead my-3">{{ 'I assume, that you want to disable some users'|trans }}</p>
+        <p class="lead mb-0">
+            <a href="{{ path('user_list') }}" class="btn btn-lg btn-primary">{{ 'Click here!'|trans }}</a>
+        </p>
+    </div>
+</div>

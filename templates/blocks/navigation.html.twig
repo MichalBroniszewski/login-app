@@ -1,29 +1,33 @@
 <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0"
-       href="{{ path('index') }}">Fintech login app</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('index') }}">Fintech login app</a>
     <div class="order-2 order-md-1">
         <ul class="navbar-nav px-3">
             {% if is_granted('ROLE_USER') %}
                 <li class="nav-item text-nowrap">
-                        {{ app.user.username }}
-                </li>
-                <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="{{ logout_path() }}">
-                        {{ 'Sign out'|trans }}
-                    </a>
-                </li>
-            {% else %}
-                <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="{{ path('security_login') }}">
-                        {{ 'Sign in'|trans }}
+                    <a class="nav-link" href="#">
+                        {{ 'Hello '|trans }}{{ app.user.username }}
                     </a>
                 </li>
                 <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="{{ path('user_register') }}">
-                        {{ 'Register'|trans }}
-                    </a>
+                    <a class="nav-link" href="{{ path('user_list') }}">{{ 'Users'|trans }}</a>
                 </li>
             {% endif %}
         </ul>
     </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item text-nowrap">
+                        <a class="nav-link" href="{{ logout_path() }}">{{ 'Sign out'|trans }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item text-nowrap">
+                        <a class="nav-link" href="{{ path('security_login') }}">{{ 'Log in'|trans }}</a>
+                    </li>
+                    <li class="nav-item text-nowrap">
+                        <a class="nav-link" href="{{ path('user_register') }}">{{ 'Register'|trans }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
 </nav>

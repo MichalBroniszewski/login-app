@@ -1,0 +1,11 @@
+<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+    <h1 class="display-4 font-italic">{{ 'Hello stranger'|trans }}</h1>
+    <p class="lead my-3">{{ 'Do you want to create an account?'|trans }}</p>
+    <p class="lead mb-0">
+        <a href="{{ path('user_register') }}" class="btn btn-lg btn-primary">{{ 'Register'|trans }}</a>
+    </p>
+    <p class="lead my-3">{{ 'or you already have one?'|trans }}</p>
+    <p class="lead mb-0">
+        <a href="{{ path('security_login') }}" class="btn btn-lg btn-primary">{{ 'Log in'|trans }}</a>
+    </p>
+</div>

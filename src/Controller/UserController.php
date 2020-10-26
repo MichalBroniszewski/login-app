@@ -69,7 +69,7 @@ class UserController extends AbstractController
         if ($this->isAllowedToDisable()) {
             $user->setEnabled(false);
             $entityManager->flush();
-            $this->addFlash('notice', 'User has been blocked.');
+            $this->addFlash('notice', 'User has been disabled.');
         } else {
             $this->addFlash('error', 'You are not allowed to perform this operation');
         }

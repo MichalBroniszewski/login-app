@@ -17,7 +17,6 @@ use Serializable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields="email", message="This e-mail is already used.")
  * @UniqueEntity(fields="username", message="This username is already used.")
  */
 class User implements UserInterface, Serializable

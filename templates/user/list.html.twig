@@ -8,7 +8,7 @@
             {{ message }}
         </div>
     {% endfor %}
-    <h3 class="border-bottom border-gray pb-2 mb-0">User list</h3>
+    <h3 class="border-bottom border-gray pb-2 mb-0">List of application users</h3>
     {% for user in users %}
         {{ include('user/list-item.html.twig', { 'user': user }) }}
     {% endfor %}
