@@ -12,7 +12,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Serializable;
 
 /**
@@ -24,6 +23,7 @@ class User implements UserInterface, Serializable
     public const ROLE_USER = 'ROLE_USER';
 
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -31,20 +31,19 @@ class User implements UserInterface, Serializable
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=50, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=5, max="50")
      */
     private $username;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      */
     private $password;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min="5", max="100")
+     * @var string
      */
     private $plainPassword;
 
@@ -55,6 +54,7 @@ class User implements UserInterface, Serializable
     private $roles;
 
     /**
+     * @var bool
      * @ORM\Column(type="boolean")
      */
     private $enabled;

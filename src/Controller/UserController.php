@@ -11,7 +11,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\UserManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,8 +38,7 @@ class UserController extends AbstractController
         UserRepository $repository,
         PaginatorInterface $paginator,
         ?int $page
-    ): Response
-    {
+    ): Response {
         $users = $paginator->paginate(
             $repository->getUserListQuery(),
             $page,
@@ -57,21 +56,23 @@ class UserController extends AbstractController
     /**
      * @Route("/disable/{id}/{page}", name="disable_user", defaults={"page"=null})
      * @param User $user
-     * @param EntityManagerInterface $entityManager
+     * @param UserManager $userManager
      * @param int|null $page
      * @return RedirectResponse
      */
     public function disableUser(
         User $user,
-        EntityManagerInterface $entityManager,
+        UserManager $userManager,
         ?int $page
     ): RedirectResponse {
-        if ($this->isAllowedToDisable()) {
-            $user->setEnabled(false);
-            $entityManager->flush();
-            $this->addFlash('notice', 'User has been disabled.');
+        if ($user->isEnabled()) {
+            $userManager->disableUser($user);
+            if ($this->isSelfDisable($user)) {
+                return $this->redirectToRoute('security_logout');
+            }
+            $this->addFlash('success', 'User has been disabled.');
         } else {
-            $this->addFlash('error', 'You are not allowed to perform this operation');
+            $this->addFlash('error', 'You are not allowed to perform this operation.');
         }
 
         return $this->redirectToRoute('user_list', [
@@ -79,10 +80,8 @@ class UserController extends AbstractController
         ]);
     }
 
-    private function isAllowedToDisable(): bool
+    private function isSelfDisable(User $user): bool
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        return $user->isEnabled();
+        return $this->getUser()->getUsername() === $user->getUsername();
     }
 }

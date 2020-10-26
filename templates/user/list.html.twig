@@ -3,11 +3,6 @@
 {% block title %}User list{% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
     <h3 class="border-bottom border-gray pb-2 mb-0">List of application users</h3>
     {% for user in users %}
         {{ include('user/list-item.html.twig', { 'user': user }) }}
