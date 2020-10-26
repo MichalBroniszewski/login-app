@@ -12,6 +12,7 @@ services:
             - php
 
     php:
+        container_name: login-app
         build:
             context: docker/php
         tty: true

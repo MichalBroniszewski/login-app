@@ -20,10 +20,3 @@ RUN groupadd --gid $userId node && useradd --uid $userId --gid node --shell /bin
 RUN curl https://getcomposer.org/download/1.10.6/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 
 WORKDIR /var/www/app
-
-# Install dependencies
-RUN composer install
-RUN npm install
-RUN ./node_modules/.bin/encore dev
-RUN php bin/console doctrine:migrations:diff && php bin/console doctrine:migrations:migrate
-RUN php bin/console doctrine:fixtures:load
