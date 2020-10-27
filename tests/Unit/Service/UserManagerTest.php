@@ -47,14 +47,14 @@ class UserManagerTest extends TestCase
     {
         $user = $this->getUser();
 
-        $this->passwordEncoder->expects($this->once())
+        $this->passwordEncoder->expects(self::once())
             ->method('encodePassword');
 
-        $this->entityManager->expects($this->once())
+        $this->entityManager->expects(self::once())
             ->method('persist')
             ->with($user);
 
-        $this->entityManager->expects($this->once())
+        $this->entityManager->expects(self::once())
             ->method('flush');
 
         $this->testSubject->saveNewUser($user);
@@ -64,7 +64,7 @@ class UserManagerTest extends TestCase
     {
         $user = $this->getUser();
 
-        $this->entityManager->expects($this->once())
+        $this->entityManager->expects(self::once())
             ->method('flush');
 
         $this->testSubject->saveNewUser($user);
@@ -74,7 +74,7 @@ class UserManagerTest extends TestCase
     {
         $user = new User();
         $user->setUsername('username');
-        $user->setPlainPassword('secrect');
+        $user->setPlainPassword('secret_password');
 
         return $user;
     }

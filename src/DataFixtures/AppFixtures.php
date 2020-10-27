@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
-    private const NUMBER_OF_USERS = 25;
+    private const NUMBER_OF_USERS = 35;
 
     private UserPasswordEncoderInterface $passwordEncoder;
 

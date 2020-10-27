@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -65,15 +66,16 @@ class UserController extends AbstractController
         UserManager $userManager,
         ?int $page
     ): RedirectResponse {
-        if ($user->isEnabled()) {
-            $userManager->disableUser($user);
-            if ($this->isSelfDisable($user)) {
-                return $this->redirectToRoute('security_logout');
-            }
-            $this->addFlash('success', 'User has been disabled.');
-        } else {
-            $this->addFlash('error', 'You are not allowed to perform this operation.');
+        if (!$user->isEnabled()) {
+            throw new BadRequestHttpException('User is already disabled.');
         }
+
+        $userManager->disableUser($user);
+        if ($this->isSelfDisable($user)) {
+            return $this->redirectToRoute('security_logout');
+        }
+
+        $this->addFlash('success', 'User has been disabled.');
 
         return $this->redirectToRoute('user_list', [
             'page' => $page
