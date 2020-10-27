@@ -8,5 +8,6 @@ C_USER=$(id -u) docker-compose up -d
 docker exec -ti login-app composer install --no-scripts
 docker exec -ti login-app npm install
 docker exec -ti login-app ./node_modules/.bin/encore dev
+docker exec -ti login-app php bin/console doctrine:migrations:diff --no-interaction
 docker exec -ti login-app php bin/console doctrine:migrations:migrate --no-interaction
 docker exec -ti login-app php bin/console doctrine:fixtures:load --no-interaction
