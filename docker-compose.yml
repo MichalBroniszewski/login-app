@@ -22,7 +22,7 @@ services:
             - ./docker/php/php-ini-extra.ini:/usr/local/etc/php/conf.d/docker-php-ext-php-ini-extra.ini
             - ~/.ssh:/home/docker/.ssh
         environment:
-            DB_NAME: picodi
+            DB_NAME: database
             DB_HOST: mysql
             DB_USER: root
             DB_PORT: 3306
